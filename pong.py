@@ -1,9 +1,10 @@
 # Basic Pong Game in Python 3
 
 import turtle
+import os
 
 wn = turtle.Screen()
-wn.title("Ping Pong by @alblackwelldev")
+wn.title("Ping Pong")
 wn.bgcolor("black")
 wn.setup(width=800, height=600)
 wn.tracer(0)
@@ -34,7 +35,7 @@ ball.color("white")
 ball.penup()
 ball.goto(0, 0)
 ball.dx = 2
-ball.dy = 2
+ball.dy = -2
 
 # Function
 def paddle_a_up():
@@ -70,3 +71,34 @@ while True:
 
     # Move the ball
     ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+    # Border checking
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ball.dy *= -1
+        os.system("afplay bounce.wav&")
+    
+    elif ball.ycor() < -290:
+        ball.sety(-290)
+        ball.dy *= -1
+        os.system("afplay bounce.wav&")
+
+    if ball.xcor() > 390:
+        ball.goto(0,0)
+        ball.dx *= -1
+        os.system("afplay bounce.wav&")
+
+    if ball.xcor() < -390:
+        ball.goto(0, 0)
+        ball.dx *= -1
+        os.system("afplay bounce.wav&")
+
+# Paddle and Ball Collisions
+    if ball.xcor() < -340 and ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50:
+        ball.dx *= -1
+        os.system("afplay bounce.wav&")
+
+    elif ball.xcor() > 340 and ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50:
+        ball.dx *= -1
+        os.system("afplay bounce.wav&")
